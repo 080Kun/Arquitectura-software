@@ -15,7 +15,8 @@
     {% if coches %}
         <ul>
             {% for coche in coches %}
-            <li>{{ coche.marca }} {{ coche.modelo }} — {{ coche.matricula }}</li>
+            <li>{{ coche.marca }} {{ coche.modelo }} — <a href="{% url 'buscar_servicios_de_coche' coche.id %}">{{ coche.matricula }}</a></li>
+            
             {% endfor %}
         </ul>
     {% else %}
