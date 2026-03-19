@@ -11,7 +11,7 @@
     <p>Email: {{ cliente.email }}</p>
 
     <h2>Coches registrados</h2>
-
+    <a href="{% url 'nuevo_coche' %}">Añadir nuevo coche</a>
     {% if coches %}
         <ul>
             {% for coche in coches %}
