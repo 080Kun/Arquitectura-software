@@ -12,6 +12,7 @@
 
     <h2>Coches registrados</h2>
     <a href="{% url 'nuevo_coche' %}">Añadir nuevo coche</a>
+    <a href="{% url 'nuevo_servicio' %}">Añadir nuevo servicio</a>
     {% if coches %}
         <ul>
             {% for coche in coches %}

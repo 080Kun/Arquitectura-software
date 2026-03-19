@@ -9,7 +9,6 @@
     <p>Matrícula: {{ coche.matricula }}</p>
 
     <h2>Historial de servicios</h2>
-    <a href="{% url 'nuevo_servicio' %}">Añadir nuevo servicio</a>
     <a href="{% url 'nuevo_servicioCoche' %}">Añadir nuevo servicio coche</a>
     {% if coche_servicios %}
         <table border="1">
