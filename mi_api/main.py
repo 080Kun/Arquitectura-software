@@ -42,10 +42,9 @@ app = FastAPI()
 #    return {"mensaje": f"Item {item_id} eliminado"}
 
 class ItemCreate(BaseModel):
-    nombre: str
-    descripcion: str | None = None
-    precio: float
-    en_stock: bool = True
+    marca: str
+    modelo: str
+    matricula: str
 
 class ItemResponse(ItemCreate):
     id: int
@@ -53,7 +52,7 @@ class ItemResponse(ItemCreate):
     class Config:
         orm_mode = True
 
-@app.post("/items/", response_model=ItemResponse)
+@app.post("/coches/", response_model=ItemResponse)
 async def create_item(item: ItemCreate, db: AsyncSession = Depends(get_db)):
     db_item = Item(**item.dict())
     db.add(db_item)
@@ -61,7 +60,7 @@ async def create_item(item: ItemCreate, db: AsyncSession = Depends(get_db)):
     await db.refresh(db_item)
     return db_item
 
-@app.get("/items/{item_id}", response_model=ItemResponse)
+@app.get("/coches/{item_id}", response_model=ItemResponse)
 async def read_item(item_id: int, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Item).where(Item.id == item_id))
     item = result.scalar_one_or_none()
@@ -69,12 +68,12 @@ async def read_item(item_id: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Item no encontrado")
     return item
 
-@app.get("/items/", response_model=list[ItemResponse])
+@app.get("/coches/", response_model=list[ItemResponse])
 async def list_items(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Item))
     return result.scalars().all()
 
-@app.put("/items/{item_id}", response_model=ItemResponse)
+@app.put("/coches/{item_id}", response_model=ItemResponse)
 async def update_item(item_id: int, item: ItemCreate, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Item).where(Item.id == item_id))
     db_item = result.scalar_one_or_none()
@@ -86,7 +85,7 @@ async def update_item(item_id: int, item: ItemCreate, db: AsyncSession = Depends
     await db.refresh(db_item)
     return db_item
 
-@app.delete("/items/{item_id}")
+@app.delete("/coches/{item_id}")
 async def delete_item(item_id: int, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Item).where(Item.id == item_id))
     item = result.scalar_one_or_none()
